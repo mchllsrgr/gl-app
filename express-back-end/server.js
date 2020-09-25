@@ -10,7 +10,7 @@ App.use(Express.static('public'));
 App.use(cors({credentials: true, origin: 'http://localhost:3002'}));
 
 
-// Sample GET route
+// routes
 App.get('/api/data', (req, res) => res.json({
   message: "Seems to work!",
 }));
