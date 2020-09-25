@@ -1,11 +1,14 @@
 const Express = require('express');
 const App = Express();
 const BodyParser = require('body-parser');
-const PORT = 8080;
+const PORT = 8081;
+const cors = require('cors');
 
 // Express Configuration
 App.use(BodyParser.urlencoded({ extended: false }));
 App.use(Express.static('public'));
+App.use(cors({credentials: true, origin: 'http://localhost:3002'}));
+
 
 // Sample GET route
 App.get('/api/data', (req, res) => res.json({
