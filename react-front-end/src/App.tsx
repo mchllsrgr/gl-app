@@ -14,12 +14,12 @@ export default function App() {
 
   const signup = (e: React.FormEvent<HTMLFormElement>, name:string, email: string, password: string) => {
     e.preventDefault();
-    axios.post('/user/signup')
-    .then((response) => {
+    axios.post('/user/signup', {name: name, email: email, password: password})
+    .then((res) => {
       setUser({
-        id: response.data.id,
-        email: response.data.email,
-        name: response.data.name
+        id: res.data.id,
+        email: res.data.email,
+        name: res.data.name
       });
     })
     .then(() => console.log(user))

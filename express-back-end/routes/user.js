@@ -2,10 +2,13 @@ const router = require("express").Router();
 
 module.exports = (db) => {
 
-  router.get('/signup', (req, res) => {
+  router.post('/signup', (req, res) => {
+    console.log(req.body);
     db.query(`
-    SELECT * FROM users;
-    `)
+    INSERT INTO users (name, email, password)
+    VALUES ($1, $2, $3)
+    RETURNING *;
+    `, [req.body.name, req.body.email, req.body.password])
     .then(response => {
       res.send(response.rows[0]);
     })

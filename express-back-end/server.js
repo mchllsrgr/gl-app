@@ -10,7 +10,8 @@ const user = require('./routes/user');
 
 
 // Express Configuration
-App.use(BodyParser.urlencoded({ extended: false }));
+App.use(BodyParser.urlencoded({ extended: true }));
+App.use(BodyParser.json());
 App.use(Express.static('public'));
 App.use(cors({credentials: true, origin: 'http://localhost:3002'}));
 App.use('/user', user(db));
