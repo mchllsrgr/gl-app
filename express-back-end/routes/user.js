@@ -14,5 +14,16 @@ module.exports = (db) => {
     .catch(err => console.error(err));
   });
 
+  router.post('/login', (req, res) => {
+    db.query(`
+    SELECT * FROM users
+    WHERE email = $1 AND password = $2;
+    `, [req.body.email, req.body.password])
+    .then(response => {
+      res.send(response.rows[0]);
+    })
+    .catch(err => console.error(err));
+  });
+
   return router;
 }

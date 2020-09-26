@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './App.css';
 import { SignUp } from './components/user/SignUp';
+import { LogIn } from './components/user/LogIn';
+
 
 interface User {
   id: number | null;
@@ -26,8 +28,21 @@ export default function App() {
     .catch(err => console.error(err));
   };
 
+  const login = (e: React.FormEvent<HTMLFormElement>, email: string, password: string) => {
+    e.preventDefault();
+    axios.post('/user/login', {email: email, password: password})
+    .then((res) => {
+      setUser({
+        id: res.data.id,
+        email: res.data.email,
+        name: res.data.name
+      });
+      localStorage.setItem('userID', res.data.id);
+    })
+    .catch(err => console.error(err));
+  };
+
   const logout = (e: React.MouseEvent<HTMLButtonElement>) => {
-    console.log('ay');
     localStorage.clear();
     setUser({id: null, email: null, name: null});
   };
@@ -40,7 +55,11 @@ export default function App() {
     <button onClick={(e) => logout(e)}>Log out</button>
     </>
     :
-    <SignUp action={signup} />}
+    <>
+    <SignUp action={signup} />
+    <LogIn action={login} />
+    </>
+    }
     </>
   )
 }
