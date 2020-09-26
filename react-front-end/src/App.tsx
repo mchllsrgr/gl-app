@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './App.css';
 import { SignUp } from './components/user/SignUp';
 
 interface User {
-  id: number;
-  email: string;
-  name: string;
+  id: number | null;
+  email: string | null;
+  name: string | null;
 }
 
 export default function App() {
@@ -21,14 +21,26 @@ export default function App() {
         email: res.data.email,
         name: res.data.name
       });
+      localStorage.setItem('userID', res.data.id);
     })
-    .then(() => console.log(user))
-    .then(() => console.log(`USER IS ${user.name}`))
+    .catch(err => console.error(err));
+  };
+
+  const logout = (e: React.MouseEvent<HTMLButtonElement>) => {
+    console.log('ay');
+    localStorage.clear();
+    setUser({id: null, email: null, name: null});
   };
   
   return (
     <>
-    <SignUp action={signup} />
+    {user.id ?
+    <>
+    <div>Hello, {user.name}!</div>
+    <button onClick={(e) => logout(e)}>Log out</button>
+    </>
+    :
+    <SignUp action={signup} />}
     </>
   )
 }
