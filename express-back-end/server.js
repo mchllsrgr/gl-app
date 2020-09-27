@@ -14,12 +14,9 @@ App.use(BodyParser.urlencoded({ extended: true }));
 App.use(BodyParser.json());
 App.use(Express.static('public'));
 App.use(cors({credentials: true, origin: 'http://localhost:3002'}));
-App.use('/user', user(db));
 
 // routes
-App.get('/api/data', (req, res) => res.json({
-  message: "Seems to work!",
-}));
+App.use('/user', user(db));
 
 App.listen(PORT, () => {
   // eslint-disable-next-line no-console

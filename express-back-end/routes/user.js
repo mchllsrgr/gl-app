@@ -20,7 +20,12 @@ module.exports = (db) => {
     WHERE email = $1 AND password = $2;
     `, [req.body.email, req.body.password])
     .then(response => {
-      res.send(response.rows[0]);
+      const user = response.rows[0];
+      if (user) {
+        res.send(user);
+      } else {
+        res.send({error: 'Incorrect email/password combination'});
+      }
     })
     .catch(err => console.error(err));
   });
