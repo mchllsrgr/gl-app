@@ -1,5 +1,5 @@
+// setup
 require('dotenv').config();
-
 const Express = require('express');
 const App = Express();
 const BodyParser = require('body-parser');
@@ -8,8 +8,7 @@ const cors = require('cors');
 const db = require('./db/connect');
 const user = require('./routes/user');
 
-
-// Express Configuration
+// configuration
 App.use(BodyParser.urlencoded({ extended: true }));
 App.use(BodyParser.json());
 App.use(Express.static('public'));
