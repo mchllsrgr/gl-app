@@ -55,8 +55,13 @@ export default function App() {
   };
 
   const logout = (e: React.MouseEvent<HTMLButtonElement>) => {
-    localStorage.clear();
-    setUser({});
+    e.preventDefault();
+    axios.post('/user/logout')
+    .then((res) => {
+      setUser(res.data);
+      localStorage.clear();
+    })
+    .catch(err => console.error(err));
   };
   
   return (

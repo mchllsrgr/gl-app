@@ -10,7 +10,9 @@ module.exports = (db) => {
     RETURNING *;
     `, [req.body.name, req.body.email, bcrypt.hashSync(req.body.password, 10)])
     .then(response => {
-      res.send(response.rows[0]);
+      const user = response.rows[0];
+      req.session.userId = user.id;
+      res.send(user);
     })
     .catch(err => console.error(err));
   });
@@ -26,12 +28,19 @@ module.exports = (db) => {
       const dbPassword = response.rows[0].password;
       // check if email/password combo matches and send error if not
       if (bcrypt.compareSync(inputPassword, dbPassword)) {
+        req.session.userId = user.id;
         res.send(user);
       } else {
         res.send({error: 'Incorrect email/password combination'});
       }
     })
     .catch(err => console.error(err));
+  });
+
+  router.post('/logout', (req, res) => {
+    res.clearCookie('session');
+    res.clearCookie('session.sig');
+    res.send({});
   });
 
   return router;
