@@ -12,9 +12,14 @@ interface User {
   name: string;
 }
 
+interface Error {
+  status: boolean;
+  message: string;
+}
+
 export default function App() {
   const [user, setUser] = useState({} as Partial<User>);
-  const [error, setError] = useState<boolean>(false);
+  const [error, setError] = useState({} as Error);
 
   const signup = (e: React.FormEvent<HTMLFormElement>, name:string, email: string, password: string) => {
     e.preventDefault();
@@ -35,8 +40,7 @@ export default function App() {
     axios.post('/user/login', {email: email, password: password})
     .then((res) => {
       if (res.data.error) {
-        console.log(res.data.error);
-        setError(true);
+        setError({status: true, message: res.data.error});
       } else {
         setUser({
           id: res.data.id,
@@ -44,7 +48,7 @@ export default function App() {
           name: res.data.name
         });
         localStorage.setItem('userID', res.data.id);
-        setError(false);
+        setError({status: false, message: ''});
       }
     })
     .catch(err => console.error(err));

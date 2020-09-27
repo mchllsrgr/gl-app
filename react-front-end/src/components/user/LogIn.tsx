@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-type LogInTypes = { action: any; error: boolean }
+type LogInTypes = { action: any; error: {status: boolean, message: string} }
 
 export const LogIn = ({ action, error }: LogInTypes) => {
   const [email, setEmail] = useState<string>('');
@@ -8,7 +8,7 @@ export const LogIn = ({ action, error }: LogInTypes) => {
 
   return (
     <>
-    {error && <div className="error">Incorrect email/password combination</div>}
+    {error && <div className="error">{error.message}</div>}
     <form>
     <label>
       Email:
