@@ -11,12 +11,12 @@ export const SignUp = ({ action }: SignUpTypes) => {
     <form>
       <label>
         Full name:
-        <input name="name" type="text" onChange={(e) => setName(e.target.value)} />
+        <input name="name" type="text" value={name} onChange={(e) => setName(e.target.value)} />
       </label>
       <br />
       <label>
         Email:
-        <input name="email" type="email" onChange={(e) => setEmail(e.target.value)} />
+        <input name="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
       </label>
       <br />
       <label>

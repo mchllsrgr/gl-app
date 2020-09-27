@@ -1,16 +1,18 @@
 import React, { useState } from 'react';
 
-type LogInTypes = { action: any }
+type LogInTypes = { action: any; error: boolean }
 
-export const LogIn = ({ action }: LogInTypes) => {
+export const LogIn = ({ action, error }: LogInTypes) => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
 
   return (
+    <>
+    {error && <div className="error">Incorrect email/password combination</div>}
     <form>
     <label>
       Email:
-      <input name="email" type="email" onChange={(e) => setEmail(e.target.value)} />
+      <input name="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
     </label>
     <br />
     <label>
@@ -20,5 +22,6 @@ export const LogIn = ({ action }: LogInTypes) => {
     <br />
     <input type="submit" value="Submit" onClick={(e) => action(e, email, password)} />
   </form>
+  </>
   )
 }
